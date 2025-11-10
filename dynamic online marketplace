@@ -1,0 +1,91 @@
+import java.util.*;
+interface Category {
+    String getCategoryName();
+}
+
+class BookCategory implements Category {
+    public String getCategoryName() {
+        return "Books";
+    }
+}
+
+class ClothingCategory implements Category {
+    public String getCategoryName() {
+        return "Clothing";
+    }
+}
+
+class GadgetCategory implements Category {
+    public String getCategoryName() {
+        return "Gadgets";
+    }
+}
+class Product<T extends Category> {
+    private String name;
+    private double price;
+    private T category;
+
+    public Product(String name, double price, T category) {
+        this.name = name;
+        this.price = price;
+        this.category = category;
+    }
+
+    public String getName() { return name; }
+    public double getPrice() { return price; }
+    public void setPrice(double price) { this.price = price; }
+    public T getCategory() { return category; }
+
+    public String toString() {
+        return name + " (" + category.getCategoryName() + ") - ₹" + price;
+    }
+}
+class Marketplace {
+    private List<Product<? extends Category>> catalog = new ArrayList<>();
+
+    public void addProduct(Product<? extends Category> product) {
+        catalog.add(product);
+    }
+
+    public void showCatalog() {
+        System.out.println("\n--- Marketplace Catalog ---");
+        if (catalog.isEmpty()) {
+            System.out.println("No products available!");
+        } else {
+            for (Product<? extends Category> p : catalog) {
+                System.out.println(p);
+            }
+        }
+    }
+   public static <T extends Product<?>> void applyDiscount(T product, double percentage) {
+        double discountAmount = product.getPrice() * (percentage / 100);
+        double newPrice = product.getPrice() - discountAmount;
+        product.setPrice(newPrice);
+        System.out.println("Discount of " + percentage + "% applied to " + product.getName() + 
+                           ". New price: ₹" + newPrice);
+    }
+}
+public class OnlineMarketplaceMain {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        Marketplace market = new Marketplace();
+        BookCategory bookCat = new BookCategory();
+        ClothingCategory clothCat = new ClothingCategory();
+        GadgetCategory gadgetCat = new GadgetCategory();
+        Product<BookCategory> book1 = new Product<>("Java Programming", 499.0, bookCat);
+        Product<ClothingCategory> cloth1 = new Product<>("T-Shirt", 799.0, clothCat);
+        Product<GadgetCategory> gadget1 = new Product<>("Smart Watch", 2499.0, gadgetCat);
+        market.addProduct(book1);
+        market.addProduct(cloth1);
+        market.addProduct(gadget1);
+        market.showCatalog();
+        System.out.print("\nEnter discount percentage for all items: ");
+        double discount = sc.nextDouble();
+        Marketplace.applyDiscount(book1, discount);
+        Marketplace.applyDiscount(cloth1, discount);
+        Marketplace.applyDiscount(gadget1, discount);
+        System.out.println("\n--- Updated Catalog ---");
+        market.showCatalog();
+        sc.close();
+    }
+}
