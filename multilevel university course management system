@@ -1,0 +1,123 @@
+import java.util.*;
+abstract class CourseType {
+    String courseName;
+    String instructor;
+
+    CourseType(String courseName, String instructor) {
+        this.courseName = courseName;
+        this.instructor = instructor;
+    }
+
+    abstract void evaluate(); // evaluation method
+
+    public String toString() {
+        return courseName + " (Instructor: " + instructor + ")";
+    }
+}
+
+class ExamCourse extends CourseType {
+    ExamCourse(String courseName, String instructor) {
+        super(courseName, instructor);
+    }
+
+    void evaluate() {
+        System.out.println(courseName + " is evaluated through exams.");
+    }
+}
+
+class AssignmentCourse extends CourseType {
+    AssignmentCourse(String courseName, String instructor) {
+        super(courseName, instructor);
+    }
+
+    void evaluate() {
+        System.out.println(courseName + " is evaluated through assignments.");
+    }
+}
+
+class ResearchCourse extends CourseType {
+    ResearchCourse(String courseName, String instructor) {
+        super(courseName, instructor);
+    }
+
+    void evaluate() {
+        System.out.println(courseName + " is evaluated through research projects.");
+    }
+}
+
+class Course<T extends CourseType> {
+    private List<T> courseList = new ArrayList<>();
+
+    public void addCourse(T course) {
+        courseList.add(course);
+    }
+
+    public List<T> getCourses() {
+        return courseList;
+    }
+}
+
+class UniversityUtils {
+    public static void displayAllCourses(List<? extends CourseType> courses) {
+        System.out.println("\n--- Displaying Courses ---");
+        if (courses.isEmpty()) {
+            System.out.println("No courses available.");
+            return;
+        }
+        for (CourseType c : courses) {
+            System.out.println(c);
+            c.evaluate();
+        }
+    }
+}
+
+public class UniversityCourseMain {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        Course<ExamCourse> examCourses = new Course<>();
+        Course<AssignmentCourse> assignmentCourses = new Course<>();
+        Course<ResearchCourse> researchCourses = new Course<>();
+
+        System.out.print("Enter number of exam-based courses: ");
+        int e = sc.nextInt();
+        sc.nextLine();
+        for (int i = 0; i < e; i++) {
+            System.out.print("Enter course name: ");
+            String name = sc.nextLine();
+            System.out.print("Enter instructor name: ");
+            String inst = sc.nextLine();
+            examCourses.addCourse(new ExamCourse(name, inst));
+        }
+
+        System.out.print("Enter number of assignment-based courses: ");
+        int a = sc.nextInt();
+        sc.nextLine();
+        for (int i = 0; i < a; i++) {
+            System.out.print("Enter course name: ");
+            String name = sc.nextLine();
+            System.out.print("Enter instructor name: ");
+            String inst = sc.nextLine();
+            assignmentCourses.addCourse(new AssignmentCourse(name, inst));
+        }
+
+        System.out.print("Enter number of research-based courses: ");
+        int r = sc.nextInt();
+        sc.nextLine();
+        for (int i = 0; i < r; i++) {
+            System.out.print("Enter course name: ");
+            String name = sc.nextLine();
+            System.out.print("Enter instructor name: ");
+            String inst = sc.nextLine();
+            researchCourses.addCourse(new ResearchCourse(name, inst));
+        }
+        List<CourseType> allCourses = new ArrayList<>();
+        allCourses.addAll(examCourses.getCourses());
+        allCourses.addAll(assignmentCourses.getCourses());
+        allCourses.addAll(researchCourses.getCourses());
+
+        UniversityUtils.displayAllCourses(allCourses);
+
+        sc.close();
+    }
+}
