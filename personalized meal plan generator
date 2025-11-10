@@ -1,0 +1,89 @@
+import java.util.*;
+
+// --- MealPlan Interface ---
+interface MealPlan {
+    String getMealType();
+    List<String> getMeals();
+}
+
+// --- Different Meal Types ---
+class VegetarianMeal implements MealPlan {
+    public String getMealType() { return "Vegetarian"; }
+    public List<String> getMeals() {
+        return Arrays.asList("Paneer Curry", "Dal Tadka", "Mixed Veg", "Chapati");
+    }
+}
+
+class VeganMeal implements MealPlan {
+    public String getMealType() { return "Vegan"; }
+    public List<String> getMeals() {
+        return Arrays.asList("Tofu Salad", "Quinoa Bowl", "Vegan Smoothie");
+    }
+}
+
+class KetoMeal implements MealPlan {
+    public String getMealType() { return "Keto"; }
+    public List<String> getMeals() {
+        return Arrays.asList("Grilled Chicken", "Boiled Eggs", "Avocado Salad");
+    }
+}
+
+class HighProteinMeal implements MealPlan {
+    public String getMealType() { return "High-Protein"; }
+    public List<String> getMeals() {
+        return Arrays.asList("Paneer Bhurji", "Protein Shake", "Soyabean Curry");
+    }
+}
+
+// --- Generic Meal Class ---
+class Meal<T extends MealPlan> {
+    private T mealType;
+
+    Meal(T mealType) {
+        this.mealType = mealType;
+    }
+
+    public T getMealTypeObject() {
+        return mealType;
+    }
+
+    public void showMealPlan() {
+        System.out.println("\n--- " + mealType.getMealType() + " Meal Plan ---");
+        for (String meal : mealType.getMeals()) {
+            System.out.println("- " + meal);
+        }
+    }
+}
+
+// --- Generic Method for Dynamic Plan Generation ---
+class MealPlanner {
+    public static <T extends MealPlan> void generatePlan(T mealType) {
+        Meal<T> meal = new Meal<>(mealType);
+        meal.showMealPlan();
+    }
+}
+
+// --- Main Class ---
+public class MealPlanMain {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Choose Meal Type:");
+        System.out.println("1. Vegetarian");
+        System.out.println("2. Vegan");
+        System.out.println("3. Keto");
+        System.out.println("4. High-Protein");
+        System.out.print("Enter your choice: ");
+        int choice = sc.nextInt();
+
+        switch (choice) {
+            case 1 -> MealPlanner.generatePlan(new VegetarianMeal());
+            case 2 -> MealPlanner.generatePlan(new VeganMeal());
+            case 3 -> MealPlanner.generatePlan(new KetoMeal());
+            case 4 -> MealPlanner.generatePlan(new HighProteinMeal());
+            default -> System.out.println("Invalid choice!");
+        }
+
+        sc.close();
+    }
+}
