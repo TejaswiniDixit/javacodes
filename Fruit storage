@@ -1,0 +1,45 @@
+import java.util.*;
+class Fruit storage {
+    String name;
+    Fruit(String name) {
+        this.name = name;
+    }
+    public String toString() {
+        return name;
+    }
+}
+class Apple extends Fruit {
+    Apple(String name) {
+        super(name);
+    }
+}
+class Mango extends Fruit {
+    Mango(String name) {
+        super(name);
+    }
+}
+class FruitBox<T extends Fruit> {
+    private List<T> fruits = new ArrayList<>();
+    public void add(T fruit) {
+        fruits.add(fruit);
+    }
+    public void displayFruits() {
+        for (T fruit : fruits) {
+            System.out.println(fruit);
+        }
+    }
+}
+class Car {
+    String name;
+    Car(String name) {
+        this.name = name;
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        FruitBox<Fruit> box = new FruitBox<>();
+        box.add(new Apple("Red Apple"));
+        box.add(new Mango("Alphonso Mango"));
+        box.displayFruits();
+    }
+}
