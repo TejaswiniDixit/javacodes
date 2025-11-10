@@ -1,0 +1,74 @@
+import java.util.*;
+
+class Cart<T> {
+    private List<T> items = new ArrayList<>();
+
+    public void addItem(T item) {
+        items.add(item);
+    }
+
+    public void removeItem(T item) {
+        items.remove(item);
+    }
+
+    public void displayItems() {
+        if (items.isEmpty()) {
+            System.out.println("Cart is empty.");
+        } else {
+            for (T item : items) {
+                System.out.println(item);
+            }
+        }
+    }
+}
+
+class Electronics {
+    String name;
+    Electronics(String name) {
+        this.name = name;
+    }
+    public String toString() {
+        return "Electronics: " + name;
+    }
+}
+
+class Clothing {
+    String name;
+    Clothing(String name) {
+        this.name = name;
+    }
+    public String toString() {
+        return "Clothing: " + name;
+    }
+}
+
+public class CartMain {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        Cart<Electronics> electronicsCart = new Cart<>();
+        Cart<Clothing> clothingCart = new Cart<>();
+
+        System.out.print("Enter number of electronic items: ");
+        int e = sc.nextInt();
+        sc.nextLine();
+        for (int i = 0; i < e; i++) {
+            System.out.print("Enter electronic item name: ");
+            electronicsCart.addItem(new Electronics(sc.nextLine()));
+        }
+
+        System.out.print("Enter number of clothing items: ");
+        int c = sc.nextInt();
+        sc.nextLine();
+        for (int i = 0; i < c; i++) {
+            System.out.print("Enter clothing item name: ");
+            clothingCart.addItem(new Clothing(sc.nextLine()));
+        }
+
+        System.out.println("\nElectronics Cart:");
+        electronicsCart.displayItems();
+
+        System.out.println("\nClothing Cart:");
+        clothingCart.displayItems();
+
+        System.o
