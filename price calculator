@@ -1,0 +1,92 @@
+import java.util.*;
+
+class Product {
+    double price;
+    Product(double price) {
+        this.price = price;
+    }
+    public double getPrice() {
+        return price;
+    }
+    public String toString() {
+        return "Price: " + price;
+    }
+}
+
+class Mobile extends Product {
+    String name;
+    Mobile(String name, double price) {
+        super(price);
+        this.name = name;
+    }
+    public String toString() {
+        return "Mobile: " + name + " | Price: " + getPrice();
+    }
+}
+
+class Laptop extends Product {
+    String name;
+    Laptop(String name, double price) {
+        super(price);
+        this.name = name;
+    }
+    public String toString() {
+        return "Laptop: " + name + " | Price: " + getPrice();
+    }
+}
+
+class PriceCalculator {
+    public static double calculateTotal(List<? extends Product> items) {
+        double total = 0.0;
+        for (Product item : items) {
+            total += item.getPrice();
+        }
+        return total;
+    }
+}
+
+public class PriceMain {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        List<Mobile> mobiles = new ArrayList<>();
+        List<Laptop> laptops = new ArrayList<>();
+
+        System.out.print("Enter number of mobiles: ");
+        int m = sc.nextInt();
+        sc.nextLine();
+        for (int i = 0; i < m; i++) {
+            System.out.print("Enter mobile name: ");
+            String name = sc.nextLine();
+            System.out.print("Enter mobile price: ");
+            double price = sc.nextDouble();
+            sc.nextLine();
+            mobiles.add(new Mobile(name, price));
+        }
+
+        System.out.print("Enter number of laptops: ");
+        int l = sc.nextInt();
+        sc.nextLine();
+        for (int i = 0; i < l; i++) {
+            System.out.print("Enter laptop name: ");
+            String name = sc.nextLine();
+            System.out.print("Enter laptop price: ");
+            double price = sc.nextDouble();
+            sc.nextLine();
+            laptops.add(new Laptop(name, price));
+        }
+
+        System.out.println("\nMobile List:");
+        for (Mobile mob : mobiles)
+            System.out.println(mob);
+
+        System.out.println("\nLaptop List:");
+        for (Laptop lap : laptops)
+            System.out.println(lap);
+
+        System.out.println("\nTotal Mobile Price: " + PriceCalculator.calculateTotal(mobiles));
+        System.out.println("Total Laptop Price: " + PriceCalculator.calculateTotal(laptops));
+
+        sc.close();
+    }
+}
