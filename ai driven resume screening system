@@ -1,0 +1,85 @@
+import java.util.*;
+
+// --- Abstract Base Class for Job Roles ---
+abstract class JobRole {
+    String candidateName;
+    int experience; // in years
+
+    JobRole(String candidateName, int experience) {
+        this.candidateName = candidateName;
+        this.experience = experience;
+    }
+
+    abstract boolean isQualified(); // Each job defines its own criteria
+
+    public String toString() {
+        return candidateName + " (" + getClass().getSimpleName() + ", " + experience + " yrs)";
+    }
+}
+
+// --- Different Job Role Subclasses ---
+class SoftwareEngineer extends JobRole {
+    int codingScore;
+
+    SoftwareEngineer(String name, int exp, int codingScore) {
+        super(name, exp);
+        this.codingScore = codingScore;
+    }
+
+    boolean isQualified() {
+        return experience >= 2 && codingScore >= 70;
+    }
+}
+
+class DataScientist extends JobRole {
+    int mlProjects;
+
+    DataScientist(String name, int exp, int mlProjects) {
+        super(name, exp);
+        this.mlProjects = mlProjects;
+    }
+
+    boolean isQualified() {
+        return experience >= 3 && mlProjects >= 2;
+    }
+}
+
+class ProductManager extends JobRole {
+    int leadershipScore;
+
+    ProductManager(String name, int exp, int leadershipScore) {
+        super(name, exp);
+        this.leadershipScore = leadershipScore;
+    }
+
+    boolean isQualified() {
+        return experience >= 4 && leadershipScore >= 60;
+    }
+}
+
+// --- Generic Resume Class ---
+class Resume<T extends JobRole> {
+    private T applicant;
+
+    Resume(T applicant) {
+        this.applicant = applicant;
+    }
+
+    public T getApplicant() {
+        return applicant;
+    }
+
+    public void processResume() {
+        System.out.println("Processing Resume: " + applicant);
+        if (applicant.isQualified())
+            System.out.println("Status: ✅ Qualified for next round.\n");
+        else
+            System.out.println("Status: ❌ Not qualified.\n");
+    }
+}
+
+// --- Utility Class for Screening Multiple Resumes ---
+class ScreeningPipeline {
+    public static void processAll(List<? extends JobRole> resumes) {
+        System.out.println("\n--- AI Screening Pipeline ---");
+        for (J
