@@ -1,0 +1,114 @@
+import java.util.*;
+
+abstract class WarehouseItem {
+    String name;
+    double price;
+
+    WarehouseItem(String name, double price) {
+        this.name = name;
+        this.price = price;
+    }
+
+    public String toString() {
+        return name + " | Price: ₹" + price;
+    }
+}
+
+class Electronics extends WarehouseItem {
+    Electronics(String name, double price) {
+        super(name, price);
+    }
+}
+
+class Groceries extends WarehouseItem {
+    Groceries(String name, double price) {
+        super(name, price);
+    }
+}
+
+class Furniture extends WarehouseItem {
+    Furniture(String name, double price) {
+        super(name, price);
+    }
+}
+
+class Storage<T extends WarehouseItem> {
+    private List<T> items = new ArrayList<>();
+
+    public void addItem(T item) {
+        items.add(item);
+    }
+
+    public List<T> getItems() {
+        return items;
+    }
+}
+
+class Display {
+    public static void showItems(List<? extends WarehouseItem> items) {
+        if (items.isEmpty()) {
+            System.out.println("No items in this category.");
+        } else {
+            for (WarehouseItem item : items) {
+                System.out.println(item);
+            }
+        }
+    }
+}
+
+public class WarehouseMain {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        Storage<Electronics> electronicsStorage = new Storage<>();
+        Storage<Groceries> groceriesStorage = new Storage<>();
+        Storage<Furniture> furnitureStorage = new Storage<>();
+
+        System.out.print("Enter number of electronic items: ");
+        int e = sc.nextInt();
+        sc.nextLine();
+        for (int i = 0; i < e; i++) {
+            System.out.print("Enter electronic item name: ");
+            String name = sc.nextLine();
+            System.out.print("Enter price: ");
+            double price = sc.nextDouble();
+            sc.nextLine();
+            electronicsStorage.addItem(new Electronics(name, price));
+        }
+
+        System.out.print("Enter number of grocery items: ");
+        int g = sc.nextInt();
+        sc.nextLine();
+        for (int i = 0; i < g; i++) {
+            System.out.print("Enter grocery item name: ");
+            String name = sc.nextLine();
+            System.out.print("Enter price: ");
+            double price = sc.nextDouble();
+            sc.nextLine();
+            groceriesStorage.addItem(new Groceries(name, price));
+        }
+
+        System.out.print("Enter number of furniture items: ");
+        int f = sc.nextInt();
+        sc.nextLine();
+        for (int i = 0; i < f; i++) {
+            System.out.print("Enter furniture item name: ");
+            String name = sc.nextLine();
+            System.out.print("Enter price: ");
+            double price = sc.nextDouble();
+            sc.nextLine();
+            furnitureStorage.addItem(new Furniture(name, price));
+        }
+
+        System.out.println("\n--- Electronics ---");
+        Display.showItems(electronicsStorage.getItems());
+
+        System.out.println("\n--- Groceries ---");
+        Display.showItems(groceriesStorage.getItems());
+
+        System.out.println("\n--- Furniture ---");
+        Display.showItems(furnitureStorage.getItems());
+
+        sc.close();
+    }
+}
