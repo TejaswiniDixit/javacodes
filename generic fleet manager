@@ -1,0 +1,74 @@
+import java.util.*;
+
+class Vehicle {
+    String name;
+    Vehicle(String name) {
+        this.name = name;
+    }
+    public String toString() {
+        return name;
+    }
+}
+
+class Truck extends Vehicle {
+    Truck(String name) {
+        super(name);
+    }
+}
+
+class Bike extends Vehicle {
+    Bike(String name) {
+        super(name);
+    }
+}
+
+class FleetManager<T extends Vehicle> {
+    private List<T> fleet = new ArrayList<>();
+
+    public void addVehicle(T vehicle) {
+        fleet.add(vehicle);
+    }
+
+    public void showFleet() {
+        if (fleet.isEmpty()) {
+            System.out.println("No vehicles in fleet.");
+        } else {
+            for (T v : fleet) {
+                System.out.println(v);
+            }
+        }
+    }
+}
+
+public class FleetMain {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        FleetManager<Truck> truckFleet = new FleetManager<>();
+        FleetManager<Bike> bikeFleet = new FleetManager<>();
+
+        System.out.print("Enter number of trucks: ");
+        int t = sc.nextInt();
+        sc.nextLine();
+        for (int i = 0; i < t; i++) {
+            System.out.print("Enter truck name: ");
+            truckFleet.addVehicle(new Truck(sc.nextLine()));
+        }
+
+        System.out.print("Enter number of bikes: ");
+        int b = sc.nextInt();
+        sc.nextLine();
+        for (int i = 0; i < b; i++) {
+            System.out.print("Enter bike name: ");
+            bikeFleet.addVehicle(new Bike(sc.nextLine()));
+        }
+
+        System.out.println("\nTruck Fleet:");
+        truckFleet.showFleet();
+
+        System.out.println("\nBike Fleet:");
+        bikeFleet.showFleet();
+
+        sc.close();
+    }
+}
