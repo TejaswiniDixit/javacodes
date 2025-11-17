@@ -1,0 +1,41 @@
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        Map<String, Integer> stock = new HashMap<>();
+
+        int n = sc.nextInt();
+        for (int i = 0; i < n; i++) {
+            String p = sc.next();
+            int q = sc.nextInt();
+            stock.put(p, q);
+        }
+
+        String buyProduct = sc.next();
+        int buyQty = sc.nextInt();
+        if (stock.containsKey(buyProduct)) {
+            int newQty = stock.get(buyProduct) - buyQty;
+            if (newQty > 0) stock.put(buyProduct, newQty);
+            else stock.put(buyProduct, 0);
+        }
+
+        String restockProduct = sc.next();
+        int addQty = sc.nextInt();
+        stock.put(restockProduct, stock.getOrDefault(restockProduct, 0) + addQty);
+
+        String queryProduct = sc.next();
+        if (stock.containsKey(queryProduct)) {
+            System.out.println(stock.get(queryProduct));
+        } else {
+            System.out.println("not stocked");
+        }
+
+        for (String p : stock.keySet()) {
+            if (stock.get(p) == 0) {
+                System.out.println(p + " out of stock");
+            }
+        }
+    }
+}
