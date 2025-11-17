@@ -1,0 +1,47 @@
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        Map<String, Double> emp = new HashMap<>();
+
+        int n = sc.nextInt();
+        for (int i = 0; i < n; i++) {
+            String name = sc.next();
+            double sal = sc.nextDouble();
+            emp.put(name, sal);
+        }
+
+        int ops = sc.nextInt();
+        for (int i = 0; i < ops; i++) {
+            String name = sc.next();
+            double percent = sc.nextDouble();
+
+            if (emp.containsKey(name)) {
+                double newSal = emp.get(name) + emp.get(name) * (percent / 100.0);
+                emp.put(name, newSal);
+            } else {
+                System.out.println("Employee not found");
+            }
+        }
+
+        double sum = 0;
+        for (String e : emp.keySet()) {
+            sum += emp.get(e);
+        }
+        double avg = sum / emp.size();
+        System.out.println(avg);
+
+        double max = -1;
+        for (double s : emp.values()) {
+            if (s > max) max = s;
+        }
+
+        for (String e : emp.keySet()) {
+            if (emp.get(e) == max) {
+                System.out.println(e);
+            }
+        }
+    }
+}
