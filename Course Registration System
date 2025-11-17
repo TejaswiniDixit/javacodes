@@ -1,0 +1,31 @@
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        Map<String, Integer> courses = new HashMap<>();
+
+        int n = sc.nextInt();
+        for (int i = 0; i < n; i++) {
+            String code = sc.next();
+            int count = sc.nextInt();
+            courses.put(code, count);
+        }
+
+        int ops = sc.nextInt();
+        for (int i = 0; i < ops; i++) {
+            String type = sc.next();
+            String course = sc.next();
+            int num = sc.nextInt();
+
+            int curr = courses.getOrDefault(course, 0);
+
+            if (type.equals("add"))
+                courses.put(course, curr + num);
+            else if (type.equals("drop"))
+                courses.put(course, Math.max(0, curr - num));
+        }
+
+        for (String c : courses.keySet()) {
+            int val = courses.get(c);
