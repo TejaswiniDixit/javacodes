@@ -1,0 +1,29 @@
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        Map<String, Double> grades = new HashMap<>();
+
+        int n = sc.nextInt();
+        for (int i = 0; i < n; i++) {
+            String name = sc.next();
+            double grade = sc.nextDouble();
+            grades.put(name, grade);
+        }
+
+        String updateName = sc.next();
+        double newGrade = sc.nextDouble();
+        grades.put(updateName, newGrade);
+
+        String removeName = sc.next();
+        grades.remove(removeName);
+
+        TreeMap<String, Double> sorted = new TreeMap<>(grades);
+
+        for (String name : sorted.keySet()) {
+            System.out.println(name + " " + sorted.get(name));
+        }
+    }
+}
