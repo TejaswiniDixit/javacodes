@@ -1,0 +1,28 @@
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int n = sc.nextInt();
+        HashMap<String, Integer> map = new HashMap<>();
+
+        for (int i = 0; i < n; i++) {
+            String k = sc.next();
+            int v = sc.nextInt();
+            map.put(k, v);
+        }
+
+        HashMap<Integer, List<String>> inverted = new HashMap<>();
+
+        for (String key : map.keySet()) {
+            int val = map.get(key);
+            if (!inverted.containsKey(val)) {
+                inverted.put(val, new ArrayList<>());
+            }
+            inverted.get(val).add(key);
+        }
+
+        System.out.println(inverted);
+    }
+}
