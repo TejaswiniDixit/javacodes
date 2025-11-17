@@ -1,0 +1,46 @@
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        LinkedHashMap<String, Double> cart = new LinkedHashMap<>();
+        LinkedHashMap<String, Integer> qty = new LinkedHashMap<>();
+
+        int n = sc.nextInt();
+        for (int i = 0; i < n; i++) {
+            String p = sc.next();
+            double price = sc.nextDouble();
+            int q = sc.nextInt();
+            cart.put(p, price);
+            qty.put(p, q);
+        }
+
+        int ops = sc.nextInt();
+        for (int i = 0; i < ops; i++) {
+            String product = sc.next();
+            int q = sc.nextInt();
+            if (qty.containsKey(product)) {
+                int newQ = qty.get(product) + q;
+                if (newQ <= 0) {
+                    qty.remove(product);
+                    cart.remove(product);
+                } else {
+                    qty.put(product, newQ);
+                }
+            }
+        }
+
+        for (String p : cart.keySet()) {
+            System.out.println(p + " " + cart.get(p) + " x" + qty.get(p));
+        }
+
+        double total = 0;
+        for (String p : cart.keySet()) {
+            total += cart.get(p) * qty.get(p);
+        }
+
+        if (total > 5000) total = total * 0.9;
+        System.out.println("Total: " + total);
+    }
+}
