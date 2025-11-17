@@ -1,0 +1,42 @@
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        Map<String, String> books = new HashMap<>();
+
+        int n = sc.nextInt();
+        sc.nextLine();
+        for (int i = 0; i < n; i++) {
+            String isbn = sc.next();
+            String title = sc.nextLine().trim();
+            books.put(isbn, title);
+        }
+
+        String searchISBN = sc.next();
+        if (books.containsKey(searchISBN))
+            System.out.println(books.get(searchISBN));
+        else
+            System.out.println("Book not found");
+
+        String removeISBN = sc.next();
+        books.remove(removeISBN);
+
+        TreeMap<String, String> sorted = new TreeMap<>(books);
+        for (String isbn : sorted.keySet()) {
+            System.out.println(isbn + " - " + sorted.get(isbn));
+        }
+
+        sc.nextLine();
+        String searchTitle = sc.nextLine().trim();
+        boolean found = false;
+        for (String isbn : books.keySet()) {
+            if (books.get(isbn).equalsIgnoreCase(searchTitle)) {
+                System.out.println(isbn);
+                found = true;
+            }
+        }
+        if (!found) System.out.println("Book not found");
+    }
+}
