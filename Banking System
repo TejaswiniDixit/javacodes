@@ -1,0 +1,46 @@
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        HashMap<String, Double> bank = new HashMap<>();
+
+        int n = sc.nextInt();
+        for (int i = 0; i < n; i++) {
+            String acc = sc.next();
+            double bal = sc.nextDouble();
+            bank.put(acc, bal);
+        }
+
+        int ops = sc.nextInt();
+        for (int i = 0; i < ops; i++) {
+            String type = sc.next();
+            String acc = sc.next();
+            double amt = sc.nextDouble();
+
+            if (!bank.containsKey(acc)) continue;
+
+            double curr = bank.get(acc);
+
+            if (type.equals("deposit")) {
+                bank.put(acc, curr + amt);
+            } else if (type.equals("withdraw")) {
+                if (curr >= amt) bank.put(acc, curr - amt);
+                else System.out.println("Insufficient balance");
+            }
+        }
+
+        List<Map.Entry<String, Double>> list = new ArrayList<>(bank.entrySet());
+        list.sort((a, b) -> Double.compare(b.getValue(), a.getValue()));
+
+        for (Map.Entry<String, Double> e : list) {
+            System.out.println(e.getKey() + " " + e.getValue());
+        }
+
+        System.out.println("Top 3:");
+        for (int i = 0; i < Math.min(3, list.size()); i++) {
+            System.out.println(list.get(i).getKey() + " " + list.get(i).getValue());
+        }
+    }
+}
