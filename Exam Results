@@ -1,0 +1,53 @@
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        Map<String, Map<String, Integer>> data = new HashMap<>();
+
+        int subjects = sc.nextInt();
+        for (int i = 0; i < subjects; i++) {
+            String subject = sc.next();
+            int count = sc.nextInt();
+            Map<String, Integer> inner = new HashMap<>();
+            for (int j = 0; j < count; j++) {
+                String name = sc.next();
+                int marks = sc.nextInt();
+                inner.put(name, marks);
+            }
+            data.put(subject, inner);
+        }
+
+        for (String subj : data.keySet()) {
+            Map<String, Integer> m = data.get(subj);
+            String topper = null;
+            int max = -1;
+            for (String s : m.keySet()) {
+                if (m.get(s) > max) {
+                    max = m.get(s);
+                    topper = s;
+                }
+            }
+            System.out.println(subj + " Topper: " + topper + " " + max);
+        }
+
+        for (String subj : data.keySet()) {
+            Map<String, Integer> m = data.get(subj);
+            int sum = 0;
+            for (int v : m.values()) sum += v;
+            double avg = sum / (double)m.size();
+            System.out.println(subj + " Average: " + avg);
+        }
+
+        for (String subj : data.keySet()) {
+            Map<String, Integer> m = data.get(subj);
+            for (int v : m.values()) {
+                if (v > 90) {
+                    System.out.println(subj + " has score > 90");
+                    break;
+                }
+            }
+        }
+    }
+}
