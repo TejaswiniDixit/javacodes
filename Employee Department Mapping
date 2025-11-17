@@ -1,0 +1,37 @@
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        HashMap<Integer, String> map = new HashMap<>();
+
+        int n = sc.nextInt();
+        for (int i = 0; i < n; i++) {
+            int id = sc.nextInt();
+            String dept = sc.next();
+            map.put(id, dept);
+        }
+
+        int changeId = sc.nextInt();
+        String newDept = sc.next();
+        map.put(changeId, newDept);
+
+        String searchDept = sc.next();
+        for (int id : map.keySet()) {
+            if (map.get(id).equals(searchDept)) {
+                System.out.println(id);
+            }
+        }
+
+        HashMap<String, Integer> count = new HashMap<>();
+        for (int id : map.keySet()) {
+            String d = map.get(id);
+            count.put(d, count.getOrDefault(d, 0) + 1);
+        }
+
+        for (String d : count.keySet()) {
+            System.out.println(d + " " + count.get(d));
+        }
+    }
+}
