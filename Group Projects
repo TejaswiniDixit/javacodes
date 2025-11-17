@@ -1,0 +1,41 @@
+import java.util.*;
+
+class Employee {
+    String name;
+    String dept;
+
+    Employee(String name, String dept) {
+        this.name = name;
+        this.dept = dept;
+    }
+
+    public String toString() {
+        return name;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int n = sc.nextInt();
+        ArrayList<Employee> list = new ArrayList<>();
+
+        for (int i = 0; i < n; i++) {
+            String name = sc.next();
+            String dept = sc.next();
+            list.add(new Employee(name, dept));
+        }
+
+        HashMap<String, List<Employee>> map = new HashMap<>();
+
+        for (Employee e : list) {
+            if (!map.containsKey(e.dept)) {
+                map.put(e.dept, new ArrayList<>());
+            }
+            map.get(e.dept).add(e);
+        }
+
+        System.out.println(map);
+    }
+}
